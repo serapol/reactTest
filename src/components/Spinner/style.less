@@ -1,0 +1,42 @@
+.generate-circles(@n, @i: 1) when (@i =< @n) {
+  &[data-order='@{i}'] {
+    transform: rotate(@i * 30deg);
+
+    &:before {
+      animation-delay: @i/10 - 1.2s;
+    }
+  }
+  .generate-circles(@n, (@i + 1));
+}
+
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  position: relative;
+
+  &-circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      margin: 0 auto;
+      width: 15%;
+      height: 15%;
+      background-color: #fff;
+      border-radius: 100%;
+      animation: circleFadeDelay 1.2s infinite ease-in-out both;
+    }
+
+    .generate-circles(12);
+  }
+}
+
+@keyframes circleFadeDelay {
+  0%, 39%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}

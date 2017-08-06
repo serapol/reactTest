@@ -1,0 +1,29 @@
+.snackbar-container {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 2.4rem;
+  text-align: center;
+  font-size: 2.4rem;
+  color: #fff;
+  z-index: 100000;
+  transform: translateY(100%);
+  transition: transform 150ms;
+
+  &.success {
+    background: #00c853;
+  }
+
+  &.notice {
+    background: #c89200;
+  }
+
+  &.error {
+    background: #c80042;
+  }
+
+  &.show {
+    transform: translateY(0);
+  }
+}

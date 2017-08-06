@@ -1,0 +1,68 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+@error-background: #f6dede;
+
+.form-input {
+  position: relative;
+  margin: 0 0 2rem 0;
+
+  label {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: normal;
+  }
+
+  input {
+    .rounded-input();
+    margin: 0;
+    font-size: 1.6rem;
+    padding: 1.4rem 2rem;
+    line-height: normal;
+
+    &.error,
+    &.error:focus {
+      border-color: @danger-color;
+    }
+
+    &[readonly],
+    &[readonly]:focus,
+    &[disabled] {
+      opacity: .4;
+      cursor: not-allowed;
+      border-color: #e8e8e8;
+    }
+  }
+
+  .show-password-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    user-select: none;
+
+    &.password-showed {
+      .eye-icon {
+        fill: @base-color-hover;
+      }
+    }
+
+    .eye-icon {
+      width: 100%;
+      fill: @icon-link-color;
+      cursor: pointer;
+
+      &:hover {
+        fill: @base-color-hover;
+      }
+
+      &:active {
+        fill: @base-color-active;
+      }
+    }
+  }
+}

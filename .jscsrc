@@ -1,0 +1,11 @@
+{
+  "preset": "airbnb",
+  "requirePaddingNewLinesAfterBlocks": false,
+  "disallowSpacesInsideTemplateStringPlaceholders": false,
+  "requireCamelCaseOrUpperCaseIdentifiers": false,
+  "disallowCommaBeforeLineBreak": false,
+  "disallowQuotedKeysInObjects": false,
+  "requireTrailingComma": false,
+  "maximumLineLength": 120,
+  "maxErrors": 500
+}
