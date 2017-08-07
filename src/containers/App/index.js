@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import Header from '../Header';
+import Footer from '../Footer';
 
 class App extends Component {
   static propTypes = {
@@ -8,7 +10,11 @@ class App extends Component {
   render() {
     return (
       <div className="app-wrapper">
-        {this.props.children}
+        <Header />
+        <div className="content-wrapper">
+          {this.props.children}
+        </div>
+        <Footer />
       </div>
     );
   }

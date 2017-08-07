@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-class About extends Component {
+class AboutPage extends Component {
   render() {
     return (
-      <div className="about-page">
-        About page
+      <div className="page-content about-page">
+        <h1>Simple 2gis map manager</h1>
+        <h3>Author: Sergey Polishchuk</h3>
       </div>
     );
   }
 }
 
-export default About;
+export default AboutPage;

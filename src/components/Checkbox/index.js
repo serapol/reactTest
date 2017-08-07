@@ -1,4 +1,4 @@
-import './Checkbox.less';
+import './style.less';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { CheckmarkIcon } from '../../icons';

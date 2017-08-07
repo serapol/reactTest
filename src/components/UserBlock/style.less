@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.user-block {
+  float: right;
+
+  &-content {
+    .user-name {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.8rem;
+      margin-right: 1rem;
+    }
+
+    .action-button {
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .vertical-divider {
+      display: inline-block;
+      vertical-align: middle;
+      height: 1.8rem;
+      width: 1px;
+      background: #fff;
+      margin: 0 1rem;
+    }
+  }
+}

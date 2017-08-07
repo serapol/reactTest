@@ -1,7 +1,7 @@
-import './Snackbar.less';
+import './style.less';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import Layer from '../Layer/Layer';
+import { Layer } from '../../components';
 
 const BASE_CLASS_NAME = 'snackbar';
 

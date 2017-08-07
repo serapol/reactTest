@@ -27,17 +27,10 @@ const plugins = [
   })
 ];
 
-const alias = {};
-["EventPluginHub", "EventConstants", "EventPluginUtils", "EventPropagators",
- "SyntheticUIEvent", "CSSPropertyOperations", "ViewportMetrics"].forEach(function(filename){
-    alias["react-dom/lib/"+filename] = path.join(__dirname, "../node_modules/react/lib", filename);
-});
-
 module.exports = {
   env : process.env.NODE_ENV,
   entry: {
-    app: path.resolve(PATHS.app, 'index.js'),
-    vendor: ['react']
+    app: path.resolve(PATHS.app, 'app.js'),
   },
   output: {
     path: PATHS.build,
@@ -51,7 +44,6 @@ module.exports = {
   resolve: {
     // We can now require('file') instead of require('file.jsx')
     extensions: ['', '.js', '.jsx', '.less'],
-    alias
   },
   module: {
     loaders: [
@@ -92,7 +84,15 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, '../src'),
-    port: 8080
+    historyApiFallback: true,
+    port: 3030,
+    stats: {
+      colors: true,
+      hash: false,
+      version: false,
+      chunks: false,
+      children: false
+    }
   },
   devtool: 'eval'
 };

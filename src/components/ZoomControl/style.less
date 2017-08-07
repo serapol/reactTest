@@ -1,0 +1,30 @@
+@import "../../styles/variables";
+
+.zoom-control {
+  position: relative;
+  width: 4rem;
+  height: 10rem;
+  z-index: 1;
+
+  &-increase,
+  &-decrease {
+    margin: 1rem 0;
+    background: @primary-color;
+    color: #fff;
+    width: 5rem;
+    height: 5rem;
+    font-size: 4rem;
+    line-height: 4.2rem;
+    text-align: center;
+    border-radius: 100%;
+    border: 4px solid #fff;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    user-select: none;
+  }
+
+  &-decrease {
+    line-height: 3.6rem;
+  }
+}

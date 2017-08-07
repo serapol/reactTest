@@ -1,3 +1,4 @@
+import './style.less';
 import React, {Component} from 'react';
 import moment from 'moment';
 
@@ -24,7 +25,7 @@ class Clock extends Component {
     const formattedTime = moment(this.state.time).format('HH:mm');
 
     return (
-      <span>{formattedTime}</span>
+      <div className="clock">{formattedTime}</div>
     );
   }
 }

@@ -1,7 +1,7 @@
-import './Input.less';
+import './style.less';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import Tooltip from '../Tooltip/Tooltip';
+import Tooltip from '../Tooltip';
 import { EyeIcon } from '../../icons';
 
 class Input extends Component {
@@ -27,7 +27,8 @@ class Input extends Component {
     validate: React.PropTypes.func,
     onKeyDown: PropTypes.func,
     onBlur: PropTypes.func,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onInput: PropTypes.func
   };
 
   static defaultProps = {
@@ -87,10 +88,12 @@ class Input extends Component {
   }
 
   handleInput(e) {
-    const value = this.props.trimValue ? e.target.value.trim() : e.target.value;
+    const input = e.target;
+    const value = this.props.trimValue ? input.value.trim() : input.value;
+    const inputName = input.name;
     const isValid = this.props.validate(value);
 
-    this.props.onInput(value, e);
+    this.props.onInput(value, inputName, e);
 
     if (isValid !== null) {
       this.setState({
@@ -131,7 +134,7 @@ class Input extends Component {
       validationState,
       trimValue,
       validate,
-      ...props
+      ...otherProps
     } = this.props;
     const {
       showPassword
@@ -147,7 +150,7 @@ class Input extends Component {
       >
         {inputLabel && <label>{inputLabel}</label>}
         <input
-          {...props}
+          {...otherProps}
           className={classNames(
             className,
             {

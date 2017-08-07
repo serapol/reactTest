@@ -15,11 +15,36 @@
   }
 
   input {
-    .rounded-input();
-    margin: 0;
-    font-size: 1.6rem;
-    padding: 1.4rem 2rem;
+    width: 100%;
+    background: #fff;
+    border-radius: 4rem;
+    border: 2px solid #e8e8e8;
+    padding: .9rem 2rem;
+    font-size: 1.4rem;
+    outline: none;
+    color: #333;
     line-height: normal;
+
+    &::-webkit-input-placeholder {
+      color: #aaa;
+    }
+    &::-moz-placeholder {
+      color: #aaa;
+    }
+    &:-ms-input-placeholder {
+      color: #aaa;
+    }
+    &:-moz-placeholder {
+      color: #aaa;
+    }
+
+    &:focus {
+      border-color: @base-text-color;
+    }
+
+    &.error {
+      border-color: @danger-color;
+    }
 
     &.error,
     &.error:focus {
@@ -47,21 +72,21 @@
 
     &.password-showed {
       .eye-icon {
-        fill: @base-color-hover;
+        fill: @primary-color;
       }
     }
 
     .eye-icon {
       width: 100%;
-      fill: @icon-link-color;
+      fill: @light-gray;
       cursor: pointer;
 
       &:hover {
-        fill: @base-color-hover;
+        fill: @primary-color;
       }
 
       &:active {
-        fill: @base-color-active;
+        fill: @primary-color;
       }
     }
   }

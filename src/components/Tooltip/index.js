@@ -1,7 +1,7 @@
+import './style.less';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classname from 'classnames';
-import './Tooltip.less';
 
 const BASE_CLASS_NAME = 'tooltip';
 

@@ -1,4 +1,4 @@
-import './Dialog.less';
+import './style.less';
 
 import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';

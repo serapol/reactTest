@@ -1,7 +1,11 @@
-export const LOGIN = 'LOGIN';
-export const USER_LOGGED = 'ACCOUNT_LOGGED';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGOUT = 'LOGOUT';
-export const REGISTER = 'REGISTER';
 
+export const MAP_POINTS_SAVING = 'MAP_POINTS_SAVING';
 export const MAP_POINTS_SAVED = 'MAP_POINTS_SAVED';
 export const MAP_POINTS_LOADED = 'MAP_POINTS_LOADED';
+export const MAP_POINTS_LOADING = 'MAP_POINTS_LOADING';
+export const MAP_POINTS_CLEARED = 'MAP_POINTS_CLEARED';
+export const ADD_MAP_POINT = 'ADD_MAP_POINT';

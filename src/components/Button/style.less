@@ -1,3 +1,78 @@
-.btn-base {
+@import "../../styles/variables";
 
+.btn-base {
+  position: relative;
+  background: @primary-color;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid @primary-color;
+  text-decoration: none;
+  padding: 1rem 3rem;
+  letter-spacing: .1rem;
+  font-size: 1.4rem;
+  transition: color .25s, background .25s, border .25s;
+  font-weight: 400;
+
+  &:hover, &:focus {
+    background: @primary-color-hover;
+    border-color: @primary-color-hover;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &:active {
+    background: @primary-color-active;
+    border-color: @primary-color-active;
+    color: #fff;
+  }
+
+  &[disabled], &[disabled]:hover {
+    background: desaturate(@primary-color, 40%);
+    border-color: desaturate(@primary-color, 40%);
+    cursor: not-allowed;
+  }
 }
+
+.btn-danger {
+  background: @danger-color!important;
+  border-color: @danger-color!important;
+  color: #fff;
+
+  &:hover, &:focus {
+    background: lighten(@danger-color, 10%)!important;
+    border-color: lighten(@danger-color, 10%)!important;
+  }
+
+  &:active {
+    background: darken(@danger-color, 10%)!important;
+    border-color: darken(@danger-color, 10%)!important;
+  }
+
+  &.inverse {
+    background: #fff!important;
+    color: @danger-color;
+
+    &:hover, &:focus {
+      background: @danger-color!important;
+      border-color: @danger-color!important;
+      color: #fff;
+    }
+
+    &:active {
+      background: darken(@danger-color, 10%)!important;
+      border-color: darken(@danger-color, 10%)!important;
+      color: #fff;
+    }
+  }
+
+  &[disabled], &[disabled]:hover {
+    border-color: desaturate(@danger-color, 40%)!important;
+    cursor: not-allowed;
+  }
+}
+
+.btn-rounded {
+  border-radius: 4rem;
+}
+

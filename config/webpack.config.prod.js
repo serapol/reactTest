@@ -7,19 +7,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // App files location
 const PATHS = {
-  app: path.resolve(__dirname, '../src/js'),
+  app: path.resolve(__dirname, '../src'),
   styles: path.resolve(__dirname, '../src/styles'),
-  images: path.resolve(__dirname, '../src/images'),
+  // images: path.resolve(__dirname, '../src/images'),
   build: path.resolve(__dirname, '../build')
 };
 
 const plugins = [
-  new CopyWebpackPlugin([
-    {
-      from: PATHS.images,
-      to: './images'
-    }
-  ]),
+  // new CopyWebpackPlugin([
+  //   {
+  //     from: PATHS.images,
+  //     to: './images'
+  //   }
+  // ]),
   // Shared code
   //new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.bundle.js'),
   // Avoid publishing files when compilation fails
@@ -40,15 +40,9 @@ const plugins = [
   new ExtractTextPlugin('css/app.css', { allChunks: true })
 ];
 
-const alias = {};
-["EventPluginHub", "EventConstants", "EventPluginUtils", "EventPropagators",
- "SyntheticUIEvent", "CSSPropertyOperations", "ViewportMetrics"].forEach(function(filename){
-    alias["react-dom/lib/"+filename] = path.join(__dirname, "../node_modules/react/lib", filename);
-});
-
 module.exports = {
   entry: {
-    app: path.resolve(PATHS.app, 'main.js'),
+    app: path.resolve(PATHS.app, 'app.js'),
     vendor: ['react']
   },
 
@@ -64,7 +58,6 @@ module.exports = {
   resolve: {
     // We can now require('file') instead of require('file.jsx')
     extensions: ['', '.js', '.jsx', '.less'],
-    alias
   },
   module: {
     noParse: /\.min\.js$/,

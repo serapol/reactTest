@@ -1,4 +1,4 @@
-import './Button.less';
+import './style.less';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 

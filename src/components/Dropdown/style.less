@@ -1,0 +1,115 @@
+@import "../../styles/variables";
+
+@border-color: #e8e8e8;
+@background-color: #fff;
+@background-color-hover: #fbfbfb;
+@item-font-color: #3f3f3f;
+@items-container-max-height: 23.5rem;
+@border-size: .2rem;
+
+.dropdown {
+  display: inline-block;
+  text-align: left;
+  position: relative;
+
+  &.read-only {
+    .dropdown-value {
+      cursor: default;
+    }
+  }
+
+  &.open {
+    .dropdown-value {
+      background: @background-color;
+      border-color: @border-color;
+      border-radius: 2.6rem 2.6rem 0 0;
+      border-bottom-color: #fff;
+    }
+
+    .dropdown-items {
+      opacity: 1;
+      max-height: @items-container-max-height;
+      transition: max-height 200ms ease-out;
+      border-radius: 0 0 2.6rem 2.6rem;
+    }
+
+    &.drop-up {
+      .dropdown-value {
+        border-radius: 0 0 2.6rem 2.6rem;
+        border-top-color: #fff;
+        border-bottom-color: @border-color;
+      }
+
+      .dropdown-items {
+        border-radius: 2.6rem 2.6rem 0 0;
+        border-top: @border-size solid @border-color;
+        border-bottom: 0;
+      }
+    }
+  }
+
+  &.drop-up {
+    .dropdown-items {
+      transform: translateY(-100%);
+      top: @border-size + 0.1rem;
+    }
+  }
+
+  &-value {
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    background: @background-color;
+    font-size: 1.6rem;
+    line-height: 4.6rem;
+    padding: 0 2rem;
+    border: @border-size solid @border-color;
+    border-radius: 4.6rem;
+    color: #000;
+    transition: none;
+  }
+
+  &-arrow {
+    width: 1rem;
+    position: absolute;
+    fill: #010101;
+    top: 2rem;
+    right: 2rem;
+  }
+
+  &-items {
+    width: 100%;
+    position: absolute;
+    background: @background-color;
+    opacity: 0;
+    border: @border-size solid @border-color;
+    margin: -@border-size 0 0 0;
+    max-height: 0;
+    border-top: 0;
+    overflow-x: hidden;
+    z-index: 1;
+    border-radius: 2.6rem;
+    padding: 0;
+  }
+
+  &-item {
+    padding: 0 2.2rem;
+    cursor: pointer;
+    line-height: 4.6rem;
+    color: @item-font-color;
+    font-size: 1.4rem;
+
+    &.group {
+      color: @secondary-text-color;
+      cursor: default;
+
+      &:hover {
+        background: none;
+      }
+    }
+
+    &:hover {
+      background: @background-color-hover;
+    }
+  }
+}
