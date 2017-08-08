@@ -3,8 +3,9 @@ import './styles.less';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from '../../actions';
 import throttle from 'lodash/throttle';
+import { Map, Marker, Popup, Icon } from '2gis-maps-react';
+import * as Actions from '../../actions';
 import {
   ZoomControl,
   Button,
@@ -12,26 +13,7 @@ import {
   DropdownItem,
   Dialog
 } from '../../components';
-import { Map, Marker, Popup, Icon } from '2gis-maps-react';
-
-const POI = [
-  {
-    title: 'Pharmacies',
-    type: 'pharmacy',
-  },
-  {
-    title: 'Gas stations',
-    type: 'gas_station',
-  },
-  {
-    title: 'Schools',
-    type: 'school',
-  },
-  {
-    title: 'Restaurants',
-    type: 'restaurant',
-  },
-];
+import POI from '../../constants/POI';
 
 class MapPage extends Component {
   state = {
