@@ -11,8 +11,8 @@
 - [x] [React](https://facebook.github.io/react/) & React-dom.
 - [x] [React-Router](https://github.com/ReactTraining/react-router).
 - [x] [Redux](https://github.com/reactjs/redux).
-- [x] [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension),
-like redux-devtools but perhaps better. (2k stars)
+- [x] [2gis React](https://github.com/2gis/2gis-maps-react).
+- [x] [Google Places API](https://developers.google.com/places).
 
 ## <a name="running"></a> Install the app
 
