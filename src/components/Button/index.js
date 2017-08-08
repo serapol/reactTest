@@ -4,9 +4,7 @@ import classNames from 'classnames';
 
 class Button extends Component {
   static propTypes = {
-    onClick: PropTypes.func,
     focused: PropTypes.bool,
-    disabled: PropTypes.bool,
     className: PropTypes.string,
     children: PropTypes.node.isRequired,
   };
@@ -14,7 +12,6 @@ class Button extends Component {
   static defaultProps = {
     focused: false,
     disabled: false,
-    onClick: function () {}
   };
 
   componentDidMount() {
@@ -25,21 +22,20 @@ class Button extends Component {
 
   render() {
     const {
-      onClick,
       className,
       children,
-      disabled
+      focused, // eslint-disable-line no-unused-vars
+      ...otherProps,
     } = this.props;
 
     return (
       <button
+        {...otherProps}
         ref={(button) => { this.DOMNode = button; }}
         className={classNames(
           'btn-base',
           className
         )}
-        onClick={onClick}
-        disabled={disabled}
       >
         {children}
       </button>

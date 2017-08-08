@@ -5,8 +5,6 @@ import moment from 'moment';
 const UPDATE_INTERVAL = 5000;
 
 class Clock extends Component {
-  intervalID = null;
-
   state = {
     time: Date.now()
   };
@@ -20,6 +18,8 @@ class Clock extends Component {
   componentWillUnmount() {
     clearInterval(this.intervalID);
   }
+
+  intervalID = null;
 
   render() {
     const formattedTime = moment(this.state.time).format('HH:mm');

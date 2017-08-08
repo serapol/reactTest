@@ -17,7 +17,6 @@ function userReducer(state = initialState, action) {
       return {...state, isLogging: false};
     case actionTypes.LOGOUT:
       return initialState;
-      return state;
     default:
       return state;
   }

@@ -7,7 +7,6 @@ const BASE_CLASS_NAME = 'zoom-control';
 class ZoomControl extends Component {
   static propTypes = {
     className: PropTypes.string,
-    style: PropTypes.object,
     max: PropTypes.number,
     min: PropTypes.number,
     value: PropTypes.number,
@@ -58,11 +57,11 @@ class ZoomControl extends Component {
   render() {
     const {
       className,
-      onChange,
-      min,
-      max,
-      step,
-      value,
+      onChange, // eslint-disable-line no-unused-vars
+      min, // eslint-disable-line no-unused-vars
+      max, // eslint-disable-line no-unused-vars
+      step, // eslint-disable-line no-unused-vars
+      value, // eslint-disable-line no-unused-vars
       ...otherProps,
     } = this.props;
 
@@ -73,7 +72,6 @@ class ZoomControl extends Component {
           BASE_CLASS_NAME,
           className
         )}
-        style={this.props.styles}
       >
         <div
           className={`${BASE_CLASS_NAME}-increase`}

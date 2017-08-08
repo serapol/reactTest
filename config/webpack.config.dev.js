@@ -6,7 +6,6 @@ const autoprefixer = require('autoprefixer');
 // App files location
 const PATHS = {
   app: path.resolve(__dirname, '../src'),
-  index: path.resolve(__dirname, '../src/index.html'),
   styles: path.resolve(__dirname, '../src/styles'),
   build: path.resolve(__dirname, '../build')
 };
@@ -20,7 +19,7 @@ const plugins = [
 
   new webpack.optimize.OccurenceOrderPlugin(),
   new HtmlWebpackPlugin({
-    template: PATHS.index,
+    template: path.resolve(PATHS.app, 'index.html'),
     hash: false,
     filename: "index.html",
     inject: "body",

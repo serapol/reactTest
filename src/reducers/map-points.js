@@ -16,6 +16,7 @@ function mapPointsReducer(state = initialState, action) {
       return { ...state, isLoading: true };
     case actionTypes.MAP_POINTS_LOADED:
       return { ...state, isLoading: false, data: action.payload };
+    case actionTypes.LOGOUT:
     case actionTypes.MAP_POINTS_CLEARED:
       return initialState;
     case actionTypes.ADD_MAP_POINT:

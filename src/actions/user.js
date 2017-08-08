@@ -1,5 +1,6 @@
 import * as actionTypes from '../constants/ActionTypes';
 import * as ajaxHelper from '../helpers/ajax';
+import GenericActions from './generic';
 import {
   API_LOGIN_URL,
   API_LOGOUT_URL,
@@ -20,14 +21,17 @@ const actions = {
         localStorage.setItem('email', data.email);
         localStorage.setItem('hash', data.passwordHash);
 
-        dispatch(actions.loginSuccess(data))
+        dispatch(actions.loginSuccess(data));
       })
-      .catch(() => dispatch(actions.loginFailure()));
+      .catch((error) => {
+        dispatch(GenericActions.showNotification(error, 'error'));
+        dispatch(actions.loginFailure());
+      });
 
   },
 
-  logout: () => (dispatch) => {
-    return ajaxHelper
+  logout: () => (dispatch) =>
+    ajaxHelper
       .get(API_LOGOUT_URL)
       .then(() => {
         localStorage.setItem('email', '');
@@ -36,21 +40,24 @@ const actions = {
         dispatch({
           type: actionTypes.LOGOUT,
         });
-      });
-  },
+      }),
 
-  register: (data) => (dispatch) => {
-    return ajaxHelper
+  register: (data) => (dispatch) =>
+    ajaxHelper
       .post(API_USER_URL, {
         data
       })
-      .then(() => {
+      .then((response) => {
+        const { notification } = response;
+
+        dispatch(GenericActions.showNotification(notification));
         dispatch(actions.login({
           email: data.email,
           password: data.password,
         }));
-      });
-  },
+        dispatch(GenericActions.linkTo('/'));
+      })
+      .catch((error) => dispatch(GenericActions.showNotification(error, 'error'))),
 
   startLogin: () => ({
     type: actionTypes.LOGIN_REQUEST,

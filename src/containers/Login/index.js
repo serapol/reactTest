@@ -1,17 +1,32 @@
+/* eslint-disable react/prop-types */
 import './styles.less';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
+import ValidationDecorator from '../../decorators/ValidationDecorator';
 import {
   Input,
   Button
 } from '../../components';
 
 class LoginPage extends Component {
+  static propTypes = {
+    validate: PropTypes.func.isRequired,
+    getValidationState: PropTypes.func.isRequired,
+  };
+
   state = {
     formData: {}
   };
+
+  componentDidMount() {
+    this.checkAuthState(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkAuthState(nextProps);
+  }
 
   checkAuthState(props) {
     const { isAuthenticated } = props.redux.state;
@@ -24,16 +39,10 @@ class LoginPage extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.checkAuthState(nextProps);
-  }
-
-  componentDidMount() {
-    this.checkAuthState(this.props);
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!this.props.validate(this.state.formData)) return;
 
     this.props.redux.actions.UserActions.login(this.state.formData);
   };
@@ -45,9 +54,13 @@ class LoginPage extends Component {
         [fieldName]: fieldValue,
       },
     });
+
+    this.props.validate({ [fieldName]: fieldValue });
   };
 
   render() {
+    const { getValidationState } = this.props;
+
     return (
       <div className="page-content login-page">
         <h1>Sign in</h1>
@@ -58,12 +71,16 @@ class LoginPage extends Component {
           <Input
             name="email"
             placeholder="Enter E-mail"
+            validationState={getValidationState('email').state}
+            errorMessage={getValidationState('email').message}
             onInput={this.handleInputChange}
           />
           <Input
             name="password"
             type="password"
             placeholder="Enter password"
+            validationState={getValidationState('password').state}
+            errorMessage={getValidationState('password').message}
             onInput={this.handleInputChange}
           />
           <Button className="btn-rounded">
@@ -103,4 +120,16 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(LoginPage);
+)(ValidationDecorator(
+  LoginPage,
+  {
+    'email': [
+      'required',
+      'email',
+    ],
+    'password': [
+      'required',
+      'password',
+    ],
+  }
+));

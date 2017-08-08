@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import Notification from '../Notification';
 
 class App extends Component {
   static propTypes = {
@@ -15,6 +16,7 @@ class App extends Component {
           {this.props.children}
         </div>
         <Footer />
+        <Notification />
       </div>
     );
   }

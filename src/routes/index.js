@@ -18,4 +18,4 @@ export default (
     <Route path="*" component={NotFoundPage} />
     <Redirect from="*" to="404" />
   </Route>
-)
+);

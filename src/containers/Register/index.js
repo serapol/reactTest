@@ -1,20 +1,29 @@
+/* eslint-disable react/prop-types */
 import './styles.less';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
+import ValidationDecorator from '../../decorators/ValidationDecorator';
 import {
   Input,
   Button
 } from '../../components';
 
 class RegisterPage extends Component {
+  static propTypes = {
+    validate: PropTypes.func.isRequired,
+    getValidationState: PropTypes.func.isRequired,
+  };
+
   state = {
     formData: {}
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!this.props.validate(this.state.formData)) return;
 
     this.props.redux.actions.UserActions.register(this.state.formData);
   };
@@ -26,9 +35,13 @@ class RegisterPage extends Component {
         [fieldName]: fieldValue,
       },
     });
+
+    this.props.validate({ [fieldName]: fieldValue });
   };
 
   render() {
+    const { getValidationState } = this.props;
+
     return (
       <div className="register-page">
         <h1>Sign up</h1>
@@ -38,23 +51,31 @@ class RegisterPage extends Component {
           <Input
             name="name"
             placeholder="Enter your name"
+            validationState={getValidationState('name').state}
+            errorMessage={getValidationState('name').message}
             onInput={this.handleInputChange}
           />
           <Input
             name="email"
             placeholder="Enter your e-mail"
+            validationState={getValidationState('email').state}
+            errorMessage={getValidationState('email').message}
             onInput={this.handleInputChange}
           />
           <Input
             name="password"
             type="password"
             placeholder="Enter your password"
+            validationState={getValidationState('password').state}
+            errorMessage={getValidationState('password').message}
             onInput={this.handleInputChange}
           />
           <Input
             name="confirmPassword"
             type="password"
             placeholder="Confirm your password"
+            validationState={getValidationState('confirmPassword').state}
+            errorMessage={getValidationState('confirmPassword').message}
             onInput={this.handleInputChange}
           />
           <Button className="btn-rounded">
@@ -66,7 +87,7 @@ class RegisterPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => {
   let obj = {};
@@ -92,4 +113,23 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(RegisterPage);
+)(ValidationDecorator(
+  RegisterPage,
+  {
+    'name': [
+      'required',
+    ],
+    'email': [
+      'required',
+      'email',
+    ],
+    'password': [
+      'required',
+      'password',
+    ],
+    'confirmPassword': [
+      'required',
+      'password',
+    ],
+  }
+));

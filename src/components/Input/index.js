@@ -15,7 +15,10 @@ class Input extends Component {
     placeholder: PropTypes.string,
     errorMessage: PropTypes.string,
     tooltipPosition: PropTypes.string,
-    value: PropTypes.any,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     trimValue: PropTypes.bool,
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -49,11 +52,6 @@ class Input extends Component {
     onBlur: function () {}
   };
 
-  state = {
-    validationState: this.props.validationState,
-    showPassword: false
-  };
-
   constructor(props) {
     super(props);
 
@@ -61,6 +59,11 @@ class Input extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.toggleShowPassword = this.toggleShowPassword.bind(this);
   }
+
+  state = {
+    validationState: this.props.validationState,
+    showPassword: false
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.validationState !== this.props.validationState) {
@@ -131,9 +134,9 @@ class Input extends Component {
       inputStyle,
       errorMessage,
       tooltipPosition,
-      validationState,
-      trimValue,
-      validate,
+      validationState, // eslint-disable-line no-unused-vars
+      trimValue, // eslint-disable-line no-unused-vars
+      validate, // eslint-disable-line no-unused-vars
       ...otherProps
     } = this.props;
     const {

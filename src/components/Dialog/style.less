@@ -7,7 +7,7 @@
   z-index: 10000;
 }
 
-.dialog-container {
+.dialog {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -40,7 +40,7 @@
     transition: transform 200ms, opacity 100ms;
   }
 
-  .dialog-close {
+  &-close {
     width: 3rem;
     fill: #fff;
     cursor: pointer;
@@ -51,12 +51,12 @@
     display: block;
   }
 
-  .dialog-header {
+  &-header {
     font-size: 24px;
     color: #3f3f3f;
   }
 
-  .dialog-body {
+  &-body {
     font-size: 16px;
     color: #747474;
     padding: 2.4rem 0 3rem 0;
@@ -77,7 +77,7 @@
     }
   }
 
-  .dialog-footer {
+  &-footer {
     .btn-base {
       text-transform: uppercase;
       padding: 1.3rem 3rem;

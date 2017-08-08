@@ -1,3 +1,4 @@
+/* eslint-disable react/no-find-dom-node */
 import './style.less';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
@@ -7,6 +8,11 @@ const BASE_CLASS_NAME = 'tooltip';
 
 class Tooltip extends Component {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.array,
+    ]),
     className: PropTypes.string,
     style: PropTypes.object,
     position: PropTypes.oneOf([
@@ -17,6 +23,7 @@ class Tooltip extends Component {
       'leftBottom'
     ]),
     show: PropTypes.bool,
+    anchor: PropTypes.element,
     hideAfterClick: PropTypes.bool,
     onHide: PropTypes.func
   };
@@ -130,12 +137,22 @@ class Tooltip extends Component {
   }
 
   render() {
+    const {
+      className, // eslint-disable-line no-unused-vars
+      position, // eslint-disable-line no-unused-vars
+      show, // eslint-disable-line no-unused-vars
+      children, // eslint-disable-line no-unused-vars
+      anchor, // eslint-disable-line no-unused-vars
+      hideAfterClick, // eslint-disable-line no-unused-vars
+      onHide, // eslint-disable-line no-unused-vars
+      ...otherProps
+    } = this.props;
     let rootClass = this.getRootClass();
 
     return (
       <div
+        {...otherProps}
         className={rootClass}
-        style={this.props.styles}
         ref={(node) => {this.tooltipNode = node;}}>
         <div className={`${BASE_CLASS_NAME}-content`}>
           {this.props.children}

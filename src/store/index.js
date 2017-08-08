@@ -31,7 +31,7 @@ export default function configureStore(appHistory, initialState = {}) {
     enhancer = compose(applyMiddleware(thunkMiddleware, routingMiddleware));
   }
 
-  const store = createStore(rootReducer, enhancer);
+  const store = createStore(rootReducer, initialState, enhancer);
 
   // Enable Webpack hot module replacement for reducers
   if (module.hot) {

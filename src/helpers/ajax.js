@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 
 const request = (url, options = {}) => {
@@ -23,27 +22,24 @@ const request = (url, options = {}) => {
   })
   .catch((error) => {
     console.error(error);
-    return Promise.reject(error);
+    return Promise.reject(error.toString());
   });
 };
 
-export const get = (url, options) => {
-  return request(url, {
+export const get = (url, options) =>
+  request(url, {
     method: 'GET',
     ...options
   });
-};
 
-export const post = (url, options) => {
-  return request(url, {
+export const post = (url, options) =>
+  request(url, {
     method: 'POST',
     ...options
   });
-};
 
-export const del = (url, options) => {
-  return request(url, {
+export const del = (url, options) =>
+  request(url, {
     method: 'DELETE',
     ...options
   });
-};

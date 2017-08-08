@@ -6,9 +6,12 @@ import { Layer } from '../../components';
 const BASE_CLASS_NAME = 'snackbar';
 
 class Snackbar extends Component {
-  autoHideTimerId = null;
-
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.array,
+    ]),
     show: PropTypes.bool.isRequired,
     type: PropTypes.oneOf([
       'success',
@@ -23,7 +26,7 @@ class Snackbar extends Component {
     show: false,
     type: 'success',
     autoHideDuration: 4000,
-    onHide: function () {}
+    onHide: () => {}
   };
 
   constructor(props, context) {
@@ -56,6 +59,8 @@ class Snackbar extends Component {
     this.removeEventListeners();
     clearTimeout(this.autoHideTimerId);
   }
+
+  autoHideTimerId = null;
 
   addEventListeners() {
     window.addEventListener('click', this.hide, true);
@@ -93,20 +98,24 @@ class Snackbar extends Component {
     const {
       show,
       type,
-      children
+      children,
+      onHide, // eslint-disable-line no-unused-vars
+      autoHideDuration, // eslint-disable-line no-unused-vars
+      ...otherProps
     } = this.props;
-
-    let baseClasses = classNames(
-      `${BASE_CLASS_NAME}-container`,
-      `${type}`,
-      {
-        'show': show
-      }
-    );
 
     return (
       <Layer className={`${BASE_CLASS_NAME}-layer`}>
-        <div className={baseClasses}>
+        <div
+          {...otherProps}
+          className={classNames(
+            BASE_CLASS_NAME,
+            `${type}`,
+            {
+              'show': show
+            }
+          )}
+        >
           {children}
         </div>
       </Layer>

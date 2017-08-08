@@ -30,7 +30,7 @@ class UserBlock extends Component {
         <div className={`${BASE_CLASS_NAME}-content`}>
           <div className="logging-status">Logging...</div>
         </div>
-      )
+      );
     }
 
     if (isLogged) {
@@ -45,7 +45,7 @@ class UserBlock extends Component {
             Logout
           </div>
         </div>
-      )
+      );
     }
 
     return (
@@ -64,16 +64,16 @@ class UserBlock extends Component {
           Sign up
         </div>
       </div>
-    )
+    );
   }
 
   render() {
     const {
       className,
-      onLogin,
-      onLogout,
-      onRegister,
-      user,
+      onLogin, // eslint-disable-line no-unused-vars
+      onLogout, // eslint-disable-line no-unused-vars
+      onRegister, // eslint-disable-line no-unused-vars
+      user, // eslint-disable-line no-unused-vars
       ...otherProps,
     } = this.props;
 

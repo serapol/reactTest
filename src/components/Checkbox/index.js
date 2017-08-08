@@ -1,53 +1,46 @@
 import './style.less';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { CheckmarkIcon } from '../../icons';
 
-class Checkbox extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    checked: PropTypes.bool,
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func
-  };
-
-  static defaultProps = {
-    checked: false,
-    disabled: false,
-    onChange: function () {}
-  };
-
-  render() {
-    const {
+const Checkbox = ({
+  className,
+  checked,
+  disabled,
+  onChange,
+  ...otherProps
+}) => (
+  <div
+    {...otherProps}
+    className={classNames(
+      'checkbox',
       className,
-      style,
-      checked,
-      disabled,
-      onChange
-    } = this.props;
+      {
+        'disabled': disabled,
+        'checked': checked
+      }
+    )}
+    onClick={() => {
+      !disabled && onChange(!checked);
+    }}
+  >
+    <div className="checkbox-container">
+      <CheckmarkIcon className="checkbox-checkmark"/>
+    </div>
+  </div>
+);
 
-    return (
-      <div
-        className={classNames(
-          'checkbox',
-          className,
-          {
-            'disabled': disabled,
-            'checked': checked
-          }
-        )}
-        style={style}
-        onClick={() => {
-          !disabled && onChange(!checked);
-        }}
-      >
-        <div className="checkbox-container">
-          <CheckmarkIcon className="checkbox-checkmark"/>
-        </div>
-      </div>
-    );
-  }
-}
+Checkbox.propTypes = {
+  className: PropTypes.string,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func
+};
+
+Checkbox.defaultProps = {
+  checked: false,
+  disabled: false,
+  onChange: () => {}
+};
 
 export default Checkbox;

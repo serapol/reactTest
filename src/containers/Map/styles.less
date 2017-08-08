@@ -21,22 +21,26 @@
 
     .btn-base {
       margin-right: 2rem;
+      box-shadow: 0 0 16px rgba(0, 0, 0, .5);
     }
   }
 
-  .dropdown {
+  .poi-controls {
     width: 20rem;
     position: absolute;
     top: 4rem;
     right: 4rem;
     z-index: 1;
 
-    &-value {
-      box-shadow: 0 0 16px rgba(0, 0, 0, .5);
-    }
+    .dropdown {
+      width: 100%;
+      &-value {
+        box-shadow: 0 0 16px rgba(0, 0, 0, .5);
+      }
 
-    &-items {
-      box-shadow: 0 10px 16px rgba(0, 0, 0, .5);
+      &-items {
+        box-shadow: 0 10px 16px rgba(0, 0, 0, .5);
+      }
     }
   }
 }

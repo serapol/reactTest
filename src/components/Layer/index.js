@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  unstable_renderSubtreeIntoContainer,
+  unstable_renderSubtreeIntoContainer, // eslint-disable-line camelcase
   unmountComponentAtNode
 } from 'react-dom';
 
@@ -14,7 +14,11 @@ import {
  */
 class Layer extends Component {
   static propTypes = {
-    className: PropTypes.string
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.array,
+    ]),
   };
 
   componentDidMount() {
@@ -41,9 +45,8 @@ class Layer extends Component {
 
   renderLayer() {
     const {
-      className,
-      style,
-      children
+      children,
+      ...otherProps
     } = this.props;
 
     if (!this.layer) {
@@ -52,7 +55,7 @@ class Layer extends Component {
     }
 
     const layerElement = (
-      <div className={className} style={style}>
+      <div {...otherProps}>
         {children}
       </div>
     );

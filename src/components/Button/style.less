@@ -72,6 +72,32 @@
   }
 }
 
+.btn-transparent {
+  border-radius: 4rem;
+  background: none;
+  border: 2px solid transparent;
+  outline: none;
+  color: @primary-color;
+
+  &:hover,
+  &:focus {
+    background: @primary-color-hover;
+    border-color: @primary-color-hover;
+  }
+
+  &:active {
+    background: @primary-color-active;
+    border-color: @primary-color-active;
+  }
+
+  &[disabled], &[disabled]:hover {
+    background: none;
+    border-color: transparent;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+}
+
 .btn-rounded {
   border-radius: 4rem;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types,react/jsx-boolean-value */
 import './styles.less';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -9,19 +10,32 @@ import {
   Button,
   Dropdown,
   DropdownItem,
+  Dialog
 } from '../../components';
-import { Map, Marker, Popup } from '2gis-maps-react';
+import { Map, Marker, Popup, Icon } from '2gis-maps-react';
 
-const POI_CATEGORIES = [
-  'pharmacies',
-  'gas stations',
-  'schools',
-  'restaurants',
+const POI = [
+  {
+    title: 'Pharmacies',
+    type: 'pharmacy',
+  },
+  {
+    title: 'Gas stations',
+    type: 'gas_station',
+  },
+  {
+    title: 'Schools',
+    type: 'school',
+  },
+  {
+    title: 'Restaurants',
+    type: 'restaurant',
+  },
 ];
 
 class MapPage extends Component {
   state = {
-    zoom: 20,
+    zoom: 15,
     center: [46.40644318971359, 30.706990957260135],
     currentPosition: [46.40644318971359, 30.706990957260135],
     markers: [],
@@ -29,21 +43,10 @@ class MapPage extends Component {
       width: 800,
       height: 800,
     },
-    poiCategory: ''
+    poiType: '',
+    showConfirmClearDialog: false,
+    confirmClearCallback: null,
   };
-
-  updateCenterByCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      (location) => {
-        const { latitude, longitude } = location.coords;
-
-        this.setState({
-          center: [latitude, longitude],
-          currentPosition: [latitude, longitude],
-        });
-      }
-    );
-  }
 
   componentDidMount() {
     this.updateCenterByCurrentLocation();
@@ -55,21 +58,6 @@ class MapPage extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeMap, false);
   }
-
-  resizeMap = throttle(() => {
-    const rect = this.domNode.getBoundingClientRect();
-
-    this.setState({
-      mapSize: {
-        width: rect.width,
-        height: rect.height,
-      },
-    });
-  }, 200);
-
-  handleZoomChange = (zoom) => {
-    this.setState({ zoom });
-  };
 
   addMarker = ({ latlng }) => {
     const description = prompt('Please fill a marker description');
@@ -101,14 +89,52 @@ class MapPage extends Component {
   };
 
   findPOI = () => {
-    const { center, poiCategory } = this.state;
+    const { center, poiType } = this.state;
+    const { findNearbyByType } = this.props.redux.actions.POIActions;
 
+    findNearbyByType(poiType, center);
   };
 
-  handlePOIDropdownChange = (poiCategory) => {
+  updateCenterByCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(
+      (location) => {
+        const { latitude, longitude } = location.coords;
+
+        this.setState({
+          center: [latitude, longitude],
+          currentPosition: [latitude, longitude],
+        });
+      }
+    );
+  }
+
+  resizeMap = throttle(() => {
+    const rect = this.domNode.getBoundingClientRect();
+
     this.setState({
-      poiCategory
-    }, this.findPOI)
+      mapSize: {
+        width: rect.width,
+        height: rect.height,
+      },
+    });
+  }, 200);
+
+  openClearConfirmDialog = () => {
+    this.setState({ showConfirmClearDialog: true });
+  };
+
+  closeClearConfirmDialog = () => {
+    this.setState({ showConfirmClearDialog: false });
+  };
+
+  handleZoomChange = (zoom) => {
+    this.setState({ zoom });
+  };
+
+  handlePOIDropdownChange = (poiType) => {
+    this.setState({
+      poiType
+    }, this.findPOI);
   };
 
   handleZoomend = (e) => {
@@ -117,7 +143,7 @@ class MapPage extends Component {
     if (zoom !== this.state.zoom) {
       this.setState({
         zoom
-      })
+      });
     }
   };
 
@@ -130,19 +156,97 @@ class MapPage extends Component {
     ) {
       this.setState({
         center: [center.lat, center.lng]
-      })
+      });
     }
   };
+
+  renderActionControls() {
+    return (
+      <div className="action-controls">
+        <Button
+          className="btn-rounded"
+          onClick={this.saveMapPoints}
+        >
+          Save map points
+        </Button>
+        <Button
+          className="btn-rounded"
+          onClick={this.loadMapPoints}
+        >
+          Load map points
+        </Button>
+        <Button
+          className="btn-rounded btn-danger"
+          onClick={this.openClearConfirmDialog}
+        >
+          Clear map points
+        </Button>
+      </div>
+    );
+  }
+
+  renderPOIControls() {
+    const { poiType } = this.state;
+
+    return (
+      <div className="poi-controls">
+        <Dropdown
+          value={poiType}
+          defaultValue="Choose POI category"
+          onChange={this.handlePOIDropdownChange}
+        >
+          {POI.map((poi, index) => (
+            <DropdownItem
+              key={index}
+              label={poi.title}
+              value={poi.type}
+            />
+          ))}
+        </Dropdown>
+      </div>
+    );
+  }
+
+  renderClearConfirmDialog() {
+    const { showConfirmClearDialog } = this.state;
+    const actions = [
+      <Button
+        key="button1"
+        className="btn-rounded"
+        onClick={this.clearMapPoints}
+        focused={true}
+      >
+        Ok
+      </Button>,
+      <Button
+        key="button2"
+        className="btn-transparent"
+        onClick={this.closeClearConfirmDialog}
+      >
+        Cancel
+      </Button>
+    ];
+
+    return (
+      <Dialog
+        title="Confirm"
+        open={showConfirmClearDialog}
+        onHide={this.closeClearConfirmDialog}
+        actions={actions}
+      >
+        Are you sure you want clear the all points?
+      </Dialog>
+    );
+  }
 
   render() {
     const {
       center,
       zoom,
       mapSize,
-      poiCategory,
       currentPosition,
     } = this.state;
-    const { mapPoints } = this.props.redux.state;
+    const { mapPoints, poi } = this.props.redux.state;
 
     return (
       <div
@@ -173,45 +277,23 @@ class MapPage extends Component {
               <Popup>{marker.description}</Popup>
             </Marker>
           ))}
+          {poi.map((marker, index) => (
+            <Marker
+              key={index}
+              pos={marker.pos}
+            >
+              <Popup>{marker.description}</Popup>
+              <Icon iconUrl={marker.icon} iconSize={[24, 24]}/>
+            </Marker>
+          ))}
           <Marker
             pos={currentPosition}
             staticLabel={'My current location'}
           />
         </Map>
-        <div className="action-controls">
-          <Button
-            className="btn-rounded"
-            onClick={this.saveMapPoints}
-          >
-            Save map points
-          </Button>
-          <Button
-            className="btn-rounded"
-            onClick={this.loadMapPoints}
-          >
-            Load map points
-          </Button>
-          <Button
-            className="btn-rounded btn-danger"
-            onClick={this.clearMapPoints}
-          >
-            Clear map points
-          </Button>
-        </div>
-        <div className="filter-controls">
-          <Dropdown
-            value={poiCategory}
-            defaultValue="Choose POI category"
-            onChange={this.handlePOIDropdownChange}
-          >
-            {POI_CATEGORIES.map((poiCategory) => (
-              <DropdownItem
-                label={poiCategory}
-                value={poiCategory}
-              />
-            ))}
-          </Dropdown>
-        </div>
+        {this.renderActionControls()}
+        {this.renderPOIControls()}
+        {this.renderClearConfirmDialog()}
       </div>
     );
   }
@@ -219,6 +301,7 @@ class MapPage extends Component {
 
 const mapStateToProps = (state) => ({
   mapPoints: state.mapPoints.data,
+  poi: state.poi.data,
 });
 
 const mapDispatchToProps = (dispatch) => {

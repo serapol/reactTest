@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import './style.less';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

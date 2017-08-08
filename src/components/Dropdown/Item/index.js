@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 class DropdownItem extends Component {
   static propTypes = {
     onClick: PropTypes.func,
+    active: PropTypes.bool,
     index: PropTypes.number,
     label: PropTypes.string,
     baseClassName: PropTypes.string,

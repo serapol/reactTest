@@ -1,5 +1,4 @@
-"use strict";
-
+/* eslint-disable consistent-return */
 const express = require('express');
 
 const router = express.Router();
@@ -27,14 +26,22 @@ module.exports = function () {
       password: user.password
     };
 
+    User.findOne({ email: user.email })
+      .then((user) => {
+        if (user) {
+          let error = new Error("User already exist");
+          error.status = 400;
+          return next(error);
+        }
 
-    User.create(newUser, (error, user) => {
-      if (error) {
-        return next(error);
-      }
+        User.create(newUser, (error, user) => {
+          if (error) {
+            return next(error);
+          }
 
-      res.status(200).json({ success: true, notification: `Success, you're registered ${ user.email }`, data: user });
-    })
+          res.status(200).json({ success: true, notification: `Success, you're registered ${ user.email }`, data: user });
+        });
+      });
   });
 
   return router;

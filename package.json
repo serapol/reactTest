@@ -10,8 +10,8 @@
   },
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server --config ./config/webpack.config.dev.js --watch-poll --hot --inline --progress",
-    "server": "node ./server/index",
-    "lint": "eslint config src/** --ext .js",
+    "server": "node --inspect ./server/index",
+    "lint": "eslint config src/** --ext .js --ignore-pattern index.html",
     "build": "NODE_ENV=production webpack -p --config ./config/webpack.config.prod.js --progress"
   },
   "dependencies": {
@@ -54,7 +54,8 @@
     "redux-logger": "3.0.6",
     "redux-promise": "^0.5.3",
     "redux-slider-monitor": "^1.0.5",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "request": "2.81.0"
   },
   "devDependencies": {
     "autoprefixer": "6.3.6",
@@ -86,5 +87,9 @@
     "file-loader": "^0.9.0",
     "copy-webpack-plugin": "2.1.3",
     "css-loader": "^0.26.1"
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.js": "eslint"
   }
 }

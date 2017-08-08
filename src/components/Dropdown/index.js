@@ -20,20 +20,28 @@ const findScrollableParent = (el) => {
 
 class Dropdown extends Component {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.array,
+    ]),
+    className: PropTypes.string,
+    style: PropTypes.object,
     onChange: PropTypes.func,
     itemsContainerStyle: PropTypes.object,
-    value: PropTypes.any,
-    defaultValue: PropTypes.any
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    defaultValue: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
   };
 
   static defaultProps = {
     itemsContainerStyle: {},
     onChange: function () {}
-  };
-
-  state = {
-    open: false,
-    isDropUp: false
   };
 
   constructor(props, context) {
@@ -44,6 +52,11 @@ class Dropdown extends Component {
     this.toggle = this.toggle.bind(this);
     this.clickAway = this.clickAway.bind(this);
   }
+
+  state = {
+    open: false,
+    isDropUp: false
+  };
 
   componentWillUnmount() {
     this.unsetEventListeners();
@@ -117,7 +130,7 @@ class Dropdown extends Component {
   }
 
   stopPropagation(e) {
-    e.stopPropagation();
+    return e.stopPropagation();
   }
 
   onItemClick(child) {
@@ -142,6 +155,8 @@ class Dropdown extends Component {
           }
         });
       }
+
+      return null;
     });
   }
 
